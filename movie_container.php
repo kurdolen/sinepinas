@@ -80,54 +80,7 @@ if (trim($movie) !== '') {
           </div>
         </div>
       </div>
-
-      <div class="right-section">
-        <div class="top-movies">Top Movies</div>
-        <div class="top-movies-list">
-          <div class="top-movie-item">
-            <div class="movie-thumbnail"></div>
-            <span class="rank">1</span>
-            <div class="movie-info">
-              <h3>Heneral Luna</h3>
-              <p>2015 • Historical Drama</p>
-            </div>
-          </div>
-          <div class="top-movie-item">
-            <div class="movie-thumbnail"></div>
-            <span class="rank">2</span>
-            <div class="movie-info">
-              <h3>Four Sisters and a Wedding</h3>
-              <p>2013 • Comedy Drama</p>
-            </div>
-          </div>
-          <div class="top-movie-item">
-            <div class="movie-thumbnail"></div>
-            <span class="rank">3</span>
-            <div class="movie-info">
-              <h3>On the Job</h3>
-              <p>2013 • Crime Thriller</p>
-            </div>
-          </div>
-          <div class="top-movie-item">
-            <div class="movie-thumbnail"></div>
-            <span class="rank">4</span>
-            <div class="movie-info">
-              <h3>The Hows of Us</h3>
-              <p>2018 • Romance</p>
-            </div>
-          </div>
-          <div class="top-movie-item">
-            <div class="movie-thumbnail"></div>
-            <span class="rank">5</span>
-            <div class="movie-info">
-              <h3>Metro Manila</h3>
-              <p>2013 • Drama</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
+    <!--
     <footer class="footer">
       <div class="footer-content">
         <div class="footer-section">
@@ -168,6 +121,9 @@ if (trim($movie) !== '') {
         <p>&copy; 2024 SinePinas. All rights reserved.</p>
       </div>
     </footer>
+    -->
+
+
   </div>
 
   <script src="script.js"></script>
