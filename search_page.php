@@ -1,4 +1,5 @@
 <?php
+//session_start();
 require_once 'functions/db_connection.php'; // Adjust path if needed
 
 $conn = loadDatabase();
@@ -27,6 +28,7 @@ if (trim($searchQuery) !== '') {
 <head>
     <meta charset="UTF-8">
     <title>Search Results</title>
+   
     <style>
         .header {
             position: relative;
@@ -101,9 +103,17 @@ if (trim($searchQuery) !== '') {
             <input type="submit" value="Find" class="search-btn">
         </form>
 
-        <a href="user_profile.php" class="register">
-            <img class="fil" src="images/fil0.png" alt="user profile" />
-        </a>
+        <?php
+        if (isset($_SESSION['user_id'])) {
+            echo '<a href="user_profile.php" class="register">
+                <img class="fil" src="images/fil0.png" alt="user profile" />
+              </a>';
+        } else {
+            echo '<button class="login">
+                Login
+              </button>';
+        }
+        ?>
     </div>
 
     <div class="search-results">
@@ -138,6 +148,69 @@ if (trim($searchQuery) !== '') {
         <?php else: ?>
             <p>No results found.</p>
         <?php endif; ?>
+    </div>
+
+
+    <div class="wrapper">
+        <span class="close-btn"><ion-icon name="close"></ion-icon></span>
+        <div class="formbox">
+            <h2>Login</h2>
+            <form action="functions/login_verification.php" method="POST" id="loginForm">
+                <div class="inputbox">
+                    <span class="icon"><ion-icon name="person"></ion-icon></span>
+                    <input type="text" name="username" required placeholder=" ">
+                    <label>Username</label>
+                </div>
+                <div class="inputbox">
+                    <span class="icon"><ion-icon name="lock-closed"></ion-icon>
+                    </span>
+                    <input type="password" name="password" required placeholder=" ">
+                    <label>Password</label>
+                </div>
+                <div class="remember">
+                    <label>
+                        <input type="checkbox">Remember me
+                    </label>
+                    <a href="#">Forgot Password?</a>
+                </div>
+                <button type="submit" class="login-btn">Login</button>
+                <div class="signup-link">
+                    <p>Don't have an account? <a href="#" class="register-link">Sign up</a></p>
+                </div>
+            </form>
+        </div>
+
+        <div class="formbox-register">
+            <h2>Registration</h2>
+            <form action="functions/registration.php" method="post" id="registerForm">
+                <div class="inputbox">
+                    <span class="icon"><ion-icon name="person"></ion-icon></span>
+                    <input type="text" name="registerUsername" required>
+                    <label>Username</label>
+                </div>
+                <div class="inputbox">
+                    <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                    <input type="email" name="registerEmail" required>
+                    <label>Email</label>
+                </div>
+
+                <div class="inputbox">
+                    <span class="icon"><ion-icon name="lock-closed"></ion-icon>
+                    </span>
+                    <input type="password" name="registerPassword" required>
+                    <label>Password</label>
+                </div>
+                <div class="remember">
+                    <label>
+                        <input type="checkbox" required>I agree to the terms and conditions
+                    </label>
+                </div>
+                <button type="submit" class="login-btn">Register</button>
+                <div class="signup-link">
+                    <p>Already have an account? <a href="#" class="login-link">Log in</a></p>
+                </div>
+            </form>
+        </div>
     </div>
 
 </body>
