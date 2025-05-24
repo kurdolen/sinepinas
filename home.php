@@ -43,7 +43,7 @@ $watching = $_SESSION['watching'] ?? 0;
     <a href="#" class="history">Action</a>
     <div class="nav-right">
       <div class="search-container">
-        <form action="#" method="GET">
+        <form action="functions/search.php" method="GET">
           <input type="text" name="search" placeholder="Search movies..." class="search-input">
           <input type="submit" value="Find" class="search-btn">
         </form>

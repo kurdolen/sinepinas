@@ -1,217 +1,136 @@
 <?php
-include 'functions/login_verification.php';
+require_once 'functions/db_connection.php'; // Adjust path if needed
 
-$watching = $_SESSION['watching'] ?? 0;
-
+$conn = loadDatabase();
 $searchQuery = $_GET['search'] ?? '';
+$results = [];
 
-if ($searchQuery) {
-    $stmt = $conn->prepare("SELECT * FROM movie_info WHERE title LIKE ?");
-    $likeQuery = "%$searchQuery%";
-    $stmt->bind_param("s", $likeQuery);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $_SESSION['search_results'] = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
-} else {
-    $_SESSION['search_results'] = [];
+if (trim($searchQuery) !== '') {
+    if ($conn instanceof PDO) {
+        $stmt = $conn->prepare("SELECT * FROM movie_info WHERE title LIKE ?");
+        $stmt->execute(["%" . $searchQuery . "%"]);
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+        $stmt = $conn->prepare("SELECT * FROM movie_info WHERE title LIKE ?");
+        $like = "%" . $searchQuery . "%";
+        $stmt->bind_param("s", $like);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $results = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+        $stmt->close();
+    }
 }
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./vars.css">
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./toast.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
-
+    <title>Search Results</title>
     <style>
+        .header {
+            position: relative;
+            width: 100%;
+            min-height: 60px;
+        }
 
+        .search-form {
+            position: absolute;
+            top: 10px;
+            right: 60px;
+            /* leave space for register button */
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            padding: 6px 10px;
+            font-size: 16px;
+            width: 200px;
+        }
+
+        .search-btn {
+            padding: 6px 12px;
+            font-size: 16px;
+        }
+
+        .movie-card {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        .register {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 32px;
+            height: 32px;
+            z-index: 10;
+        }
+
+        .register .fil {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .movie-poster {
+            width: 100px;
+            height: auto;
+            margin-right: 10px;
+        }
     </style>
-    <title>SinePinas</title>
 </head>
 
 <body>
+    <div class="header">
+        <form action="search_page.php" method="GET" class="search-form">
+            <input type="text" name="search" placeholder="Search movies..." class="search-input" value="<?= htmlspecialchars($searchQuery) ?>">
+            <input type="submit" value="Find" class="search-btn">
+        </form>
 
-    <div class="desktop-1">
-        <div class="rectangle-1" src="images/main_bg.png">
-
-        </div>
-
-        <div class="top-movies"></div>
-        <a href="#" class="classic">Drama</a>
-        <a href="#" class="romance">Romance</a>
-        <a href="#" class="comedy">Comedy</a>
-        <a href="#" class="horror">Horror</a>
-        <a href="#" class="history">Action</a>
-
-        <div class="nav-right">
-            <div class="search-container">
-                <form action="#" method="GET">
-                    <input type="text" name="search" placeholder="Search movies..." class="search-input">
-                    <input type="submit" value="Find" class="search-btn">
-                </form>
-            </div>
-
-            <?php
-            if (isset($_SESSION['user_id'])) {
-                echo '<a href="user_profile.php" class="register">
-                <img class="fil" src="images/fil0.png" alt="user profile" />
-              </a>';
-            } else {
-                echo '<button class="login">
-                Login
-              </button>';
-            }
-            ?>
-
-        </div>
-
-
-
-        <!-- SAMPLE code for testing
-         dito mapupunta mga search results -->
-        <div class="search-results">
-            <h2>Results</h2>
-            <div>
-
-                <table>
-
-                    <tr>
-                        <td>movie poster</td>
-                        <td>
-                            title
-                            year
-                            genre
-                        </td>
-                    </tr>
-
-                </table>
-
-            </div>
-        </div>
-
-
-
-
-
-
-
+        <a href="user_profile.php" class="register">
+            <img class="fil" src="images/fil0.png" alt="user profile" />
+        </a>
     </div>
 
-    <div class="wrapper">
-        <span class="close-btn"><ion-icon name="close"></ion-icon></span>
-        <div class="formbox">
-            <h2>Login</h2>
-            <form action="functions/login_verification.php" method="POST" id="loginForm">
-                <div class="inputbox">
-                    <span class="icon"><ion-icon name="person"></ion-icon></span>
-                    <input type="text" name="username" required placeholder=" ">
-                    <label>Username</label>
-                </div>
-                <div class="inputbox">
-                    <span class="icon"><ion-icon name="lock-closed"></ion-icon>
-                    </span>
-                    <input type="password" name="password" required placeholder=" ">
-                    <label>Password</label>
-                </div>
-                <div class="remember">
-                    <label>
-                        <input type="checkbox">Remember me
-                    </label>
-                    <a href="#">Forgot Password?</a>
-                </div>
-                <button type="submit" class="login-btn">Login</button>
-                <div class="signup-link">
-                    <p>Don't have an account? <a href="#" class="register-link">Sign up</a></p>
-                </div>
-            </form>
-        </div>
 
-        <div class="formbox-register">
-            <h2>Registration</h2>
-            <form action="functions/registration.php" method="post" id="registerForm">
-                <div class="inputbox">
-                    <span class="icon"><ion-icon name="person"></ion-icon></span>
-                    <input type="text" name="registerUsername" required>
-                    <label>Username</label>
-                </div>
-                <div class="inputbox">
-                    <span class="icon"><ion-icon name="mail"></ion-icon></span>
-                    <input type="email" name="registerEmail" required>
-                    <label>Email</label>
-                </div>
 
-                <div class="inputbox">
-                    <span class="icon"><ion-icon name="lock-closed"></ion-icon>
-                    </span>
-                    <input type="password" name="registerPassword" required>
-                    <label>Password</label>
-                </div>
-                <div class="remember">
-                    <label>
-                        <input type="checkbox" required>I agree to the terms and conditions
-                    </label>
-                </div>
-                <button type="submit" class="login-btn">Register</button>
-                <div class="signup-link">
-                    <p>Already have an account? <a href="#" class="login-link">Log in</a></p>
-                </div>
-            </form>
-        </div>
+    <div class="search-results">
+        <?php if (trim($searchQuery) !== ''): ?>
+            <p>Results for: <strong><?= htmlspecialchars($searchQuery) ?></strong></p>
+
+            <?php if (!empty($results)): ?>
+                <?php foreach ($results as $movie): ?>
+                    <div class="movie-card" style="display: flex; align-items: center;">
+
+                        <?php if (!empty($movie['poster_link'])): ?>
+                            <img src="<?= htmlspecialchars($movie['poster_link']) ?>" alt="movie poster" class="movie-poster">
+                        <?php else: ?>
+                            <div class="no-image">
+                                No Image
+                            </div>
+                        <?php endif; ?>
+
+                        <div>
+                            <h3><?= htmlspecialchars($movie['title']) ?></h3>
+                            <div>Genre: <?= htmlspecialchars($movie['genre'] ?? 'N/A') ?></div>
+                            <div>Release Year: <?= htmlspecialchars($movie['release_year'] ?? 'N/A') ?></div>
+                        </div>
+
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>No results found.</p>
+            <?php endif; ?>
+            <?php else: ?>
+                <p>No results found.</p>
+        <?php endif; ?>
     </div>
 
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>SinePinas!</h3>
-                <p>Your ultimate destination for Filipino cinema. Discover classic Filipino films.</p>
-            </div>
 
-            <div class="footer-section">
-                <h4>Navigate</h4>
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Explore Movies</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Categories</h4>
-                <ul>
-                    <li><a href="#">Drama</a></li>
-                    <li><a href="#">Romance</a></li>
-                    <li><a href="#">Comedy</a></li>
-                    <li><a href="#">Horror</a></li>
-                    <li><a href="#">Action</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Connect With Us</h4>
-                <div class="social-links">
-                    <a href="#"><ion-icon name="logo-facebook"></ion-icon></a>
-                    <a href="#"><ion-icon name="logo-twitter"></ion-icon></a>
-                    <a href="#"><ion-icon name="logo-instagram"></ion-icon></a>
-                    <a href="#"><ion-icon name="logo-youtube"></ion-icon></a>
-                </div>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <p>&copy; SinePinas. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="toast.js"></script>
-    <script src="script.js"></script>
 </body>
 
 </html>
