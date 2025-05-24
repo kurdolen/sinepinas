@@ -25,7 +25,7 @@ session_start();
   <div class="index-bg">
     
     <div class="back-button">
-      <a href="home.php">Back</a>
+      <a href="javascript:history.back()">Back</a>
     </div>
 
     <div class="profile-container">

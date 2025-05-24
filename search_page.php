@@ -77,16 +77,25 @@ if (trim($searchQuery) !== '') {
             border: 1px solid #ccc;
             border-radius: 6px;
         }
+
         .movie-poster {
             width: 100px;
             height: auto;
             margin-right: 10px;
+        }
+
+        .home-link {
+            color: inherit;
+            text-decoration: none;
+            font: inherit;
+
         }
     </style>
 </head>
 
 <body>
     <div class="header">
+        <a href="home.php" class="home-link">See featured films</a>
         <form action="search_page.php" method="GET" class="search-form">
             <input type="text" name="search" placeholder="Search movies..." class="search-input" value="<?= htmlspecialchars($searchQuery) ?>">
             <input type="submit" value="Find" class="search-btn">
@@ -126,8 +135,8 @@ if (trim($searchQuery) !== '') {
             <?php else: ?>
                 <p>No results found.</p>
             <?php endif; ?>
-            <?php else: ?>
-                <p>No results found.</p>
+        <?php else: ?>
+            <p>No results found.</p>
         <?php endif; ?>
     </div>
 
