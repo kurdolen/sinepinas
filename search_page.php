@@ -34,7 +34,7 @@ if (trim($searchQuery) !== '') {
             min-height: 60px;
         }
 
-        .search-form {
+        .header .search-form {
             position: absolute;
             top: 10px;
             right: 60px;
@@ -44,25 +44,18 @@ if (trim($searchQuery) !== '') {
             align-items: center;
         }
 
-        .search-input {
+        .header .search-input {
             padding: 6px 10px;
             font-size: 16px;
             width: 200px;
         }
 
-        .search-btn {
+        .header .search-btn {
             padding: 6px 12px;
             font-size: 16px;
         }
 
-        .movie-card {
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-        }
-
-        .register {
+        .header .register {
             position: absolute;
             top: 10px;
             right: 10px;
@@ -71,10 +64,18 @@ if (trim($searchQuery) !== '') {
             z-index: 10;
         }
 
-        .register .fil {
+        .header .register .fil {
             width: 100%;
             height: auto;
             display: block;
+        }
+    </style>
+    <style>
+        .movie-card {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
         }
         .movie-poster {
             width: 100px;
@@ -96,31 +97,31 @@ if (trim($searchQuery) !== '') {
         </a>
     </div>
 
-
-
     <div class="search-results">
         <?php if (trim($searchQuery) !== ''): ?>
             <p>Results for: <strong><?= htmlspecialchars($searchQuery) ?></strong></p>
 
             <?php if (!empty($results)): ?>
                 <?php foreach ($results as $movie): ?>
-                    <div class="movie-card" style="display: flex; align-items: center;">
+                    <a href="movie-container.php?id=<?= urlencode($movie['movie_id']) ?>" style="text-decoration: none; color: inherit;">
+                        <div class="movie-card" style="display: flex; align-items: center; cursor: pointer;">
 
-                        <?php if (!empty($movie['poster_link'])): ?>
-                            <img src="<?= htmlspecialchars($movie['poster_link']) ?>" alt="movie poster" class="movie-poster">
-                        <?php else: ?>
-                            <div class="no-image">
-                                No Image
+                            <?php if (!empty($movie['poster_link'])): ?>
+                                <img src="<?= htmlspecialchars($movie['poster_link']) ?>" alt="movie poster" class="movie-poster">
+                            <?php else: ?>
+                                <div class="no-image">
+                                    No Image
+                                </div>
+                            <?php endif; ?>
+
+                            <div>
+                                <h3><?= htmlspecialchars($movie['title']) ?></h3>
+                                <div>Genre: <?= htmlspecialchars($movie['genre'] ?? 'N/A') ?></div>
+                                <div>Release Year: <?= htmlspecialchars($movie['release_year'] ?? 'N/A') ?></div>
                             </div>
-                        <?php endif; ?>
 
-                        <div>
-                            <h3><?= htmlspecialchars($movie['title']) ?></h3>
-                            <div>Genre: <?= htmlspecialchars($movie['genre'] ?? 'N/A') ?></div>
-                            <div>Release Year: <?= htmlspecialchars($movie['release_year'] ?? 'N/A') ?></div>
                         </div>
-
-                    </div>
+                    </a>
                 <?php endforeach; ?>
             <?php else: ?>
                 <p>No results found.</p>
@@ -129,7 +130,6 @@ if (trim($searchQuery) !== '') {
                 <p>No results found.</p>
         <?php endif; ?>
     </div>
-
 
 </body>
 
