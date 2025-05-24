@@ -1,0 +1,122 @@
+/* Movie Container Specific Styles */
+.movie-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  background: #2a2a2a;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+}
+
+.video-player {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.video-player iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.movie-details {
+  width: 100%;
+  padding: 30px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.movie-details h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.movie-meta {
+  display: flex;
+  gap: 20px;
+  margin: 20px 0;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  color: #ccc;
+}
+
+.movie-meta span {
+  font-size: 16px;
+  padding: 8px 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.movie-description {
+  display: flex;
+  gap: 30px;
+  margin-top: 20px;
+  padding: 25px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.description-poster {
+  width: 250px;
+  height: 375px;
+  background: #2a2a2a;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+}
+
+.movie-description p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #fff;
+  flex: 1;
+  padding: 15px;
+}
+
+@media screen and (max-width: 768px) {
+  .movie-container {
+    padding: 10px;
+  }
+
+  .movie-description {
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+  }
+
+  .description-poster {
+    width: 200px;
+    height: 300px;
+    margin-bottom: 20px;
+  }
+
+  .movie-description p {
+    text-align: center;
+    padding: 10px;
+  }
+
+  .movie-meta {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 15px;
+  }
+} 
