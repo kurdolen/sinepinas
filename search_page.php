@@ -632,6 +632,35 @@ if (trim($searchQuery) !== '') {
         .formbox-register .signup-link a:hover {
             color: #cc080b;
         }
+
+        .no-results {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            border: 1px solid rgba(192, 57, 43, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-style: italic;
+            letter-spacing: 1px;
+            line-height: 1.6;
+            margin: 20px 0;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0.6;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.6;
+            }
+        }
     </style>
 </head>
 
@@ -792,6 +821,7 @@ if (trim($searchQuery) !== '') {
                 searchResults.style.display = 'block';
                 searchResults.innerHTML = '<p>Searching...</p>';
 
+                // Fetch search results
                 fetch(`search_page.php?search=${encodeURIComponent(query)}`)
                     .then(response => response.text())
                     .then(html => {
@@ -808,20 +838,21 @@ if (trim($searchQuery) !== '') {
             }
         }
 
+        // Handle form submission
         searchForm.addEventListener('submit', function(e) {
             e.preventDefault();
             const query = searchInput.value.trim();
             handleSearch(query);
         });
 
- 
+        // Handle search button click
         searchBtn.addEventListener('click', function(e) {
             e.preventDefault();
             const query = searchInput.value.trim();
             handleSearch(query);
         });
 
-   
+        // Show search results if there's a search query in URL
         if (window.location.search.includes('search=')) {
             const urlParams = new URLSearchParams(window.location.search);
             const searchQuery = urlParams.get('search');
@@ -973,17 +1004,36 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function performSearch(query) {
-        // Remove mock results and let the server handle the search
-        if (query) {
-            window.location.href = `search_page.php?search=${encodeURIComponent(query)}`;
-        }
-    }
+    fetch(`live_search.php?search=${encodeURIComponent(query)}`)
+        .then(response => response.json())
+        .then(movies => {
+            if (movies.length > 0) {
+                searchResults.innerHTML = movies.map(movie => `
+                    <div class="search-result-item">
+                        <img src="${movie.poster_link || 'images/placeholder.png'}" alt="${movie.title}">
+                        <div class="search-result-info">
+                            <h4>${movie.title}</h4>
+                            <p>${movie.release_year} • ${movie.genre}</p>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                searchResults.innerHTML = '<div class="no-results">No results found.</div>';
+            }
+        })
+        .catch(error => {
+            console.error('Search error:', error);
+            searchResults.innerHTML = '<div class="no-results">Searching....</div>';
+        });
+}
+
 
     if (searchBtn && searchInput && searchResults) {
         searchBtn.addEventListener('click', () => {
             const query = searchInput.value.trim();
             if (query) {
                 performSearch(query);
+                showSearchResults();
             }
         });
 
@@ -994,7 +1044,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if (query) {
                 searchTimeout = setTimeout(() => {
                     performSearch(query);
+                    showSearchResults();
                 }, 300);
+            } else {
+                hideSearchResults();
             }
         });
 
@@ -1003,6 +1056,17 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!searchResults.contains(e.target) && 
                 !searchInput.contains(e.target) && 
                 !searchBtn.contains(e.target)) {
+                hideSearchResults();
+            }
+        });
+
+        // Handle search result item clicks
+        searchResults.addEventListener('click', (e) => {
+            const resultItem = e.target.closest('.search-result-item');
+            if (resultItem) {
+                const movieTitle = resultItem.querySelector('h4').textContent;
+                // Handle movie selection - you can redirect to movie details page
+                console.log('Selected movie:', movieTitle);
                 hideSearchResults();
             }
         });
