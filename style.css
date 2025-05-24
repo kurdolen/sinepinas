@@ -304,7 +304,6 @@ body {
   transform: translateY(-2px);
 }
 
-/* Add this at the end of your style.css file */
 .wrapper {
   position: fixed;
   top: 50%;
@@ -312,28 +311,29 @@ body {
   transform: translate(-50%, -50%);
   width: 100%;
   max-width: 420px;
-  background-size: cover;
-  background-position: center;
+  background: rgba(0, 0, 0, 0.85);
   padding: 40px;
   border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(139, 69, 19, 0.2);
+  box-shadow: 0 8px 32px rgba(139, 69, 19, 0.4);
   z-index: 1000;
   display: none;
-  border: 2px solid red;
+  border: 2px solid #ff0a0e;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
+
 .wrapper.active-popup {
   transform: scale(1);
 }
 
 .formbox {
-  display: block; /* Show login form by default */
+  display: block;
 }
 
 .formbox-register {
-  display: none; /* Hide register form by default */
+  display: none;
 }
 
-/* When register is active */
 .wrapper.active .formbox {
   display: none;
 }
@@ -369,13 +369,8 @@ body {
   font-size: 20px;
 }
 
-.formbox {
-  text-align: left;
-}
-
 .formbox h2 {
   color: #ff0a0e;
-  font-family: var(--primary-font);
   font-size: 28px;
   margin-bottom: 25px;
   font-weight: 600;
@@ -389,54 +384,6 @@ body {
   gap: 16px;
 }
 
-.formbox input {
-  width: 100%;
-  padding: 12px 12px 12px 40px;
-  border: 1px solid #ff0a0e;
-  border-radius: 6px;
-  font-size: 15px;
-  color: #ffffff;
-  transition: all 0.3s ease;
-  background: rgba(0, 0, 0, 0.7);
-  font-family: var(--primary-font);
-}
-
-.formbox input:focus {
-  outline: none;
-  border-color: #ff0a0e;
-  box-shadow: 0 0 8px rgba(139, 69, 19, 0.3);
-}
-
-.formbox button {
-  background: #ff0a0e;
-  color: white;
-  padding: 12px;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  margin-top: 8px;
-}
-
-.formbox button:hover {
-  background: #444444;
-}
-
-.formbox .forgot-password {
-  color: #666666;
-  font-size: 13px;
-  margin-top: 8px;
-  text-decoration: none;
-  display: block;
-  text-align: center;
-}
-
-.formbox .forgot-password:hover {
-  color: #333333;
-}
-
-/* Add or update these styles in your style.css file */
 .inputbox {
   position: relative;
   margin-bottom: 20px;
@@ -451,7 +398,12 @@ body {
   color: #ffffff;
   transition: all 0.3s ease;
   background: rgba(0, 0, 0, 0.7);
-  font-family: var(--primary-font);
+}
+
+.inputbox input:focus {
+  outline: none;
+  border-color: #ff0a0e;
+  box-shadow: 0 0 8px rgba(139, 69, 19, 0.3);
 }
 
 .inputbox .icon {
@@ -480,6 +432,7 @@ body {
   font-size: 12px;
   background: white;
   padding: 0 4px;
+  color: #ff0a0e;
 }
 
 .remember {
@@ -555,7 +508,6 @@ body {
   text-shadow: 0 0 8px rgba(255, 10, 14, 0.5);
 }
 
-/* Update these styles in your style.css file */
 .formbox-register {
   background: #000000;
   padding: 20px;
@@ -564,17 +516,11 @@ body {
 
 .formbox-register h2 {
   color: #ff0a0e;
-  font-family: var(--primary-font);
   font-size: 28px;
   margin-bottom: 25px;
   font-weight: 600;
   text-align: center;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.formbox-register .inputbox {
-  position: relative;
-  margin-bottom: 20px;
 }
 
 .formbox-register .inputbox input {
@@ -583,10 +529,9 @@ body {
   border: 1px solid #ff0a0e;
   border-radius: 6px;
   font-size: 15px;
-  color: #000000;
+  color: #ffffff;
   transition: all 0.3s ease;
-  background: #ffffff;
-  font-family: var(--primary-font);
+  background: rgba(0, 0, 0, 0.7);
 }
 
 .formbox-register .inputbox label {
@@ -594,7 +539,7 @@ body {
   left: 40px;
   top: 50%;
   transform: translateY(-50%);
-  color: #000000;
+  color: #ffffff;
   pointer-events: none;
   transition: all 0.3s ease;
   font-size: 15px;
@@ -606,7 +551,7 @@ body {
   top: -10px;
   left: 12px;
   font-size: 12px;
-  background: #ffffff;
+  background: white;
   padding: 0 4px;
   color: #ff0a0e;
 }
@@ -636,7 +581,6 @@ body {
 .formbox-register .remember label {
   color: #ffffff;
   font-size: 15px;
-  font-family: var(--primary-font);
 }
 
 .formbox-register .remember a {
@@ -719,7 +663,7 @@ body {
   box-shadow: 0 8px 32px rgba(139, 69, 19, 0.2);
   z-index: 1000;
   display: none;
-  border: 2px solid rgba(139, 69, 19, 0.2);
+  border: 2px solid red;
 }
 
 .wrapper.active {

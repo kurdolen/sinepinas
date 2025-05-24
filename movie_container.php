@@ -46,15 +46,13 @@ if (trim($movie) !== '') {
 
     <div class="nav-right">
       <div class="search-container">
-        <input type="text" placeholder="Search movies..." class="search-input">
-        <button class="search-btn">
-          <ion-icon name="search"></ion-icon>
-        </button>
+        <form action="search_page.php" method="GET" class="search-form">
+            <input type="text" name="search" placeholder="Search movies..." class="search-input">
+            <input type="submit" value="Find" class="search-btn">
+        </form>
       </div>
-      <button class="tagline-btn">Experience Filipino Movie Here</button>
-      <a href="user_profile.php" class="register">
-        <img class="fil" src="images/fil0.png" alt="user profile" />
-      </a>
+
+      
     </div>
 
     <div class="content-wrapper">
