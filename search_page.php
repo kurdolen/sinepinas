@@ -122,7 +122,7 @@ if (trim($searchQuery) !== '') {
 
             <?php if (!empty($results)): ?>
                 <?php foreach ($results as $movie): ?>
-                    <a href="movie-container.php?id=<?= urlencode($movie['movie_id']) ?>" style="text-decoration: none; color: inherit;">
+                    <a href="movie_container.php?id=<?= urlencode($movie['movie_id']) ?>" style="text-decoration: none; color: inherit;">
                         <div class="movie-card" style="display: flex; align-items: center; cursor: pointer;">
 
                             <?php if (!empty($movie['poster_link'])): ?>

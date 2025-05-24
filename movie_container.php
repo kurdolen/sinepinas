@@ -1,3 +1,21 @@
+<?php
+//session_start();
+require_once 'functions/db_connection.php'; // Adjust path if needed
+
+$conn = loadDatabase();
+$movie = $_GET['id'] ?? '';
+$results = [];
+
+if (trim($movie) !== '') {
+    if ($conn instanceof PDO) {
+        $stmt = $conn->prepare("SELECT * FROM movie_info WHERE movie_id = ?");
+        $stmt->execute([$movie]);
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
