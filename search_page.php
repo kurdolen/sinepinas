@@ -35,21 +35,21 @@ if (trim($searchQuery) !== '') {
     <link rel="stylesheet" href="./toast.css">
     <style>
       
-:root {
+            :root {
 
-  --primary-color: #000000;
-  --secondary-color: #ffffff;
-  --background-color: #f5f5f5;
-  --text-color: #333333;
-  
+            --primary-color: #000000;
+            --secondary-color: #ffffff;
+            --background-color: #f5f5f5;
+            --text-color: #333333;
+            
 
-  --primary-font: 'Arial', sans-serif;
-  --heading-font: 'Arial', sans-serif;
-  
-  
-  --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  --transition: all 0.3s ease;
-}
+            --primary-font: 'Arial', sans-serif;
+            --heading-font: 'Arial', sans-serif;
+            
+            
+            --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            }
 
 
         * {
