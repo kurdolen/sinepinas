@@ -60,6 +60,148 @@ foreach ($history_results as $item) {
   <script src="index.js"></script>
 
   <title>SinePinas</title>
+<style>
+  .history-container {
+    width: 90%;
+    max-width: 600px;
+    margin: 40px auto;
+    background-color: #000;
+    padding: 30px;
+    border-radius: 20px;
+    color: white;
+  }
+  
+  .history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .history-row {
+    display: flex;
+    gap: 20px;
+    background: #1a1a1a;
+    padding: 15px;
+    border-radius: 12px;
+    align-items: center;
+  }
+  
+  .history-poster-link {
+    width: 100px;
+    height: 150px;
+    background-color: #000;
+    overflow: hidden;
+    border-radius: 8px;
+    flex-shrink: 0;
+    position: relative;
+  }
+  
+  .history-poster {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  
+  .history-info {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .history-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .history-time {
+    font-size: 14px;
+    color: #ccc;
+  }
+    @media (max-width: 1200px) {
+        .history-row {
+            width: 30%;
+        }
+    }
+
+    @media (max-width: 992px) {
+        .history-row {
+            width: 45%;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .history-row {
+            width: 80%;
+        }
+    }
+
+    .history-container{
+        position: relative;
+        background-color: black;
+        font-family: var(--primary-font);
+        margin-top: 25px;
+        margin-bottom: 25px;
+        margin-left: 30%;
+        margin-right: 30%;
+
+        padding-top: 10px;
+        padding-bottom: 50px;
+
+        border-radius: 50px;
+    }
+    .history-container .line{
+        border: none;
+        height: 2px;
+        background-color: #333;
+        width: 80%;
+        margin: 20px auto; 
+    }
+
+    .history-container h1{
+        position: relative;
+        color: white;
+        text-align: center;
+        padding-top: 20px;
+        font-size: 10% auto;
+    }
+
+    .history-container .mov-container{
+        position: relative;
+        background-color: gray;
+        margin: 0 auto 0 auto;
+        width: 90%;
+        height: 200px;
+    }
+
+    @media (max-width: 768px) {
+        .history-container {
+            width: 95%;
+            padding: 20px;
+        }
+        
+        .history-poster-link {
+            width: 80px;
+            height: 120px;
+        }
+        
+        .history-title {
+            font-size: 14px;
+        }
+        
+        .history-time {
+            font-size: 12px;
+        }
+    }
+
+</style>
 </head>
 
 <body>

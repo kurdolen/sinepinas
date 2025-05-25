@@ -109,76 +109,6 @@ body {
     box-shadow: 0 6px 20px rgba(139, 69, 19, 0.4);
 }
 
-/* Footer Styles */
-.footer {
-    background: var(--secondary-color);
-    padding: 50px 0 20px;
-    margin-top: 100px;
-}
-
-.footer-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 40px;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.footer-section h3, .footer-section h4 {
-    color: var(--text-color);
-    margin-bottom: 20px;
-    font-size: 1.4em;
-}
-
-.footer-section p {
-    color: #999;
-    line-height: 1.6;
-}
-
-.footer-section ul {
-    list-style: none;
-    padding: 0;
-}
-
-.footer-section ul li {
-    margin-bottom: 10px;
-}
-
-.footer-section ul li a {
-    color: #999;
-    text-decoration: none;
-    transition: color var(--transition-speed) ease;
-}
-
-.footer-section ul li a:hover {
-    color: var(--primary-color);
-}
-
-.social-links {
-    display: flex;
-    gap: 15px;
-}
-
-.social-links a {
-    color: #999;
-    font-size: 1.5em;
-    transition: all var(--transition-speed) ease;
-}
-
-.social-links a:hover {
-    color: var(--primary-color);
-    transform: translateY(-3px);
-}
-
-.footer-bottom {
-    text-align: center;
-    padding-top: 30px;
-    margin-top: 30px;
-    border-top: 1px solid #333;
-    color: #666;
-}
-
 /* Animations */
 @keyframes fadeIn {
     from {
@@ -262,9 +192,15 @@ body {
     height: 150px;
     margin: 0 auto 30px;
     border-radius: 50%;
-    background: linear-gradient(45deg, var(--primary-color), var(--hover-color));
+    background: url(./images/user.png);
     box-shadow: 0 4px 20px rgba(139, 69, 19, 0.3);
     transition: transform var(--transition-speed) ease;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .profile-container .user-photo:hover {
@@ -305,147 +241,10 @@ body {
     box-shadow: 0 8px 32px rgba(139, 69, 19, 0.22), 0 2px 8px rgba(0,0,0,0.12);
 }
 
-/* History Container Styles */
-.history-container {
-    position: relative;
-    background: var(--card-bg);
-    backdrop-filter: blur(10px);
-    font-family: var(--primary-font);
-    margin: 60px auto;
-    width: 90%;
-    max-width: 700px;
-    padding: 40px 30px 50px 30px;
-    border-radius: 20px;
-    box-shadow: 0 8px 32px rgba(139, 69, 19, 0.2);;
-    animation: fadeIn 0.5s ease-out;
-    display: flex;
-    flex-direction: column;
-    border: 1.5p solid red;
-    align-items: center;
-}
-
-.history-container h1 {
-    color: var(--text-color);
-    text-align: center;
-    font-size: 2.2em;
-    margin-bottom: 10px;
-    font-weight: 600;
-    letter-spacing: 1px;
-}
-
-.history-container .line {
-    border: none;
-    height: 3px;
-    background: var(--text-color);
-    width: 80%;
-    margin: 0 auto 30px auto;
-    border-radius: 2px;
-}
-
-.history-list {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    align-items: center;
-}
-
-.history-row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 30px;
-    width: 80%;
-    max-width: 400px;
-    margin: 0 auto;
-    background: rgba(255,255,255,0.03);
-    border-radius: 16px;
-    padding: 10px 20px;
-    box-shadow: 0 2px 8px rgba(139, 69, 19, 0.08);
-    transition: box-shadow 0.3s;
-}
-
-.history-row:hover {
-    box-shadow: 0 6px 24px rgba(139, 69, 19, 0.10);
-}
-
-.history-poster {
-    width: 180px;
-    height: 130px;
-    background: linear-gradient(135deg, #333 60%, var(--primary-color));
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(139, 69, 19, 0.10);
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: box-shadow 0.3s, transform 0.3s;
-}
-
-.history-poster-link {
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-}
-
-.history-poster-link:hover .history-poster {
-    box-shadow: 0 6px 24px rgba(139, 69, 19, 0.18);
-    transform: scale(1.04);
-}
-
-.history-title {
-    color: var(--text-color);
-    font-size: 1.15em;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.10);
-}
-
 /* user profile page*/
 
 .history-btn, .watchlater-btn, .edit-btn {
     color: white;
-}
-
-
-/* History page*/
-
-.history-container{
-    position: relative;
-    background-color: black;
-    font-family: var(--primary-font);
-    margin-top: 25px;
-    margin-bottom: 25px;
-    margin-left: 30%;
-    margin-right: 30%;
-
-    padding-top: 10px;
-    padding-bottom: 50px;
-
-    border-radius: 50px;
-}
-.history-container .line{
-    border: none;
-    height: 2px;
-    background-color: #333;
-    width: 80%;
-    margin: 20px auto; 
-}
-
-.history-container h1{
-    position: relative;
-    color: white;
-    text-align: center;
-    padding-top: 20px;
-    font-size: 10% auto;
-}
-
-.history-container .mov-container{
-    position: relative;
-    background-color: gray;
-    margin: 0 auto 0 auto;
-    width: 90%;
-    height: 200px;
 }
 
 /* Back Button Premium Style */
@@ -566,6 +365,4 @@ body {
     box-shadow: 0 5px 15px rgba(139, 69, 19, 0.2);
     background: rgba(255, 255, 255, 0.15);
 }
-
-
 

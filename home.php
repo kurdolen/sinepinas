@@ -36,8 +36,10 @@ if ($connect->connect_error) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./vars.css">
   <link rel="stylesheet" href="./style.css">
-  <link rel="stylesheet" href="./toast.css">
+  <link rel="stylesheet" href="./CSS/toast.css">
+  <link rel="stylesheet" href="./CSS/featured-movie.css">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
 
@@ -153,12 +155,6 @@ if ($connect->connect_error) {
           <input type="password" name="password" required placeholder=" ">
           <label>Password</label>
         </div>
-        <div class="remember">
-          <label>
-            <input type="checkbox">Remember me
-          </label>
-          <a href="#">Forgot Password?</a>
-        </div>
         <button type="submit" class="login-btn">Login</button>
         <div class="signup-link">
           <p>Don't have an account? <a href="#" class="register-link">Sign up</a></p>
@@ -217,11 +213,11 @@ if ($connect->connect_error) {
       <div class="footer-section">
         <h4>Categories</h4>
         <ul>
-          <li><a href="#">Drama</a></li>
-          <li><a href="#">Romance</a></li>
-          <li><a href="#">Comedy</a></li>
-          <li><a href="#">Horror</a></li>
-          <li><a href="#">Action</a></li>
+          <li><a href="search_page.php?search=drama">Drama</a></li>
+          <li><a href="search_page.php?search=romance">Romance</a></li>
+          <li><a href="search_page.php?search=comedy">Comedy</a></li>
+          <li><a href="search_page.php?search=horror">Horror</a></li>
+          <li><a href="search_page.php?search=action">Action</a></li>
         </ul>
       </div>
 

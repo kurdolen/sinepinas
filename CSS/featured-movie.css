@@ -1,0 +1,203 @@
+/* Featured Movie Styles */
+.rectangle-2, .rectangle-8, .rectangle-11, .rectangle-12, .rectangle-13, 
+.rectangle-14, .rectangle-15, .rectangle-16, .rectangle-17, .rectangle-18, 
+.rectangle-19 {
+  position: relative;
+  width: 100%;
+  height: 450px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #1a1a1a;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  margin-bottom: 0;
+  aspect-ratio: 2/3;
+}
+
+/* Movie Card Images */
+.rectangle-2 img, .rectangle-8 img, .rectangle-11 img, .rectangle-12 img, 
+.rectangle-13 img, .rectangle-14 img, .rectangle-15 img, .rectangle-16 img, 
+.rectangle-17 img, .rectangle-18 img, .rectangle-19 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Movie Info Overlay */
+.movie-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+  color: #ffffff;
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+}
+
+.movie-info h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #ffffff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.movie-info p {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  color: #b3b3b3;
+  letter-spacing: 0.5px;
+}
+
+/* Hover Effects */
+.rectangle-2:hover .movie-info,
+.rectangle-8:hover .movie-info,
+.rectangle-11:hover .movie-info,
+.rectangle-12:hover .movie-info,
+.rectangle-13:hover .movie-info,
+.rectangle-14:hover .movie-info,
+.rectangle-15:hover .movie-info,
+.rectangle-16:hover .movie-info,
+.rectangle-17:hover .movie-info,
+.rectangle-18:hover .movie-info,
+.rectangle-19:hover .movie-info {
+  transform: translateY(0);
+}
+
+.rectangle-2:hover,
+.rectangle-8:hover,
+.rectangle-11:hover,
+.rectangle-12:hover,
+.rectangle-13:hover,
+.rectangle-14:hover,
+.rectangle-15:hover,
+.rectangle-16:hover,
+.rectangle-17:hover,
+.rectangle-18:hover,
+.rectangle-19:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+.rectangle-2:hover img,
+.rectangle-8:hover img,
+.rectangle-11:hover img,
+.rectangle-12:hover img,
+.rectangle-13:hover img,
+.rectangle-14:hover img,
+.rectangle-15:hover img,
+.rectangle-16:hover img,
+.rectangle-17:hover img,
+.rectangle-18:hover img,
+.rectangle-19:hover img {
+  transform: scale(1.05);
+}
+
+/* Search Container Styles */
+.search-container {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 4px;
+  transition: all 0.3s ease;
+  margin-right: auto;
+}
+
+.search-container:focus-within {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 10, 14, 0.3);
+  box-shadow: 0 0 0 2px rgba(255, 10, 14, 0.1);
+}
+
+.search-input {
+  border: none;
+  background: transparent;
+  padding: 6px 8px;
+  color: #fff;
+  font-size: 14px;
+  width: 180px;
+  font-family: 'Montserrat', sans-serif;
+  transition: all 0.3s ease;
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease;
+}
+
+.search-input:focus::placeholder {
+  opacity: 0.7;
+  transform: translateX(5px);
+}
+
+.search-input:focus {
+  outline: none;
+}
+
+.search-btn {
+  background: linear-gradient(135deg, #ff0a0e, #ff3b3f);
+  border: none;
+  padding: 8px 16px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 6px;
+  font-family: 'Montserrat', sans-serif;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  box-shadow: 0 2px 10px rgba(255, 10, 14, 0.2);
+}
+
+.search-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: 0.5s;
+}
+
+.search-btn:hover {
+  background: linear-gradient(135deg, #ff1f23, #ff4b4f);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 10, 14, 0.3);
+}
+
+.search-btn:hover::before {
+  left: 100%;
+}
+
+.search-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(255, 10, 14, 0.2);
+}
+
+/* Responsive Search */
+@media screen and (max-width: 768px) {
+  .search-input {
+    width: 160px;
+    font-size: 13px;
+  }
+  
+  .search-btn {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+}
+
+

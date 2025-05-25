@@ -58,11 +58,11 @@ loadDatabase();
       <div class="footer-section">
         <h4>Categories</h4>
         <ul>
-          <li><a href="#">Drama</a></li>
-          <li><a href="#">Romance</a></li>
-          <li><a href="#">Comedy</a></li>
-          <li><a href="#">Horror</a></li>
-          <li><a href="#">Action</a></li>
+          <li><a href="search_page.php?search=drama">Drama</a></li>
+          <li><a href="search_page.php?search=romance">Romance</a></li>
+          <li><a href="search_page.php?search=comedy">Comedy</a></li>
+          <li><a href="search_page.php?search=horror">Horror</a></li>
+          <li><a href="search_page.php?search=action">Action</a></li>
         </ul>
       </div>
 

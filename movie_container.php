@@ -60,10 +60,34 @@ if (isset($_SESSION['user_id'])) {
   <link rel="stylesheet" href="./vars.css">
   <link rel="stylesheet" href="./style.css">
   <link rel="stylesheet" href="./CSS/movie.css">
+    <link rel="stylesheet" href="./CSS/featured-movie.css">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
   <title>SinePinas</title>
+  <style>
+
+      .nav-link{
+            position: relative;
+            top: 2px;
+            left: 3px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.1em;
+            padding: 10px 20px;
+            border: 2px solid #c0392b;
+            border-radius:home-link 4px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover{
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(192, 57, 43, 0.4);
+        }
+  </style>
+
+
 </head>
 
 <body>
