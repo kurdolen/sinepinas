@@ -63,7 +63,7 @@ foreach ($history_results as $item) {
 <style>
   .history-container {
     width: 90%;
-    max-width: 600px;
+    max-width: 800px;
     margin: 40px auto;
     background-color: #000;
     padding: 30px;
@@ -75,6 +75,7 @@ foreach ($history_results as $item) {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    padding-left: 25px;
   }
   
   .history-row {
@@ -84,6 +85,13 @@ foreach ($history_results as $item) {
     padding: 15px;
     border-radius: 12px;
     align-items: center;
+    transition: transform 0.3s ease;
+    margin-left: 25px;
+  }
+  
+  .history-row:hover {
+    transform: translateX(10px);
+    background: #2a2a2a;
   }
   
   .history-poster-link {
@@ -94,17 +102,23 @@ foreach ($history_results as $item) {
     border-radius: 8px;
     flex-shrink: 0;
     position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
   
   .history-poster {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     object-position: center;
     display: block;
-    background-size: contain;
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    transition: transform 0.3s ease;
+  }
+  
+  .history-row:hover .history-poster {
+    transform: scale(1.05);
   }
   
   .history-info {
@@ -113,12 +127,13 @@ foreach ($history_results as $item) {
   }
   
   .history-title {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: #fff;
   }
   
   .history-time {
@@ -185,19 +200,50 @@ foreach ($history_results as $item) {
         .history-container {
             width: 95%;
             padding: 20px;
+            margin: 20px auto;
+        }
+        
+        .history-row {
+            flex-direction: column;
+            text-align: center;
+            padding: 15px;
+            align-items: center;
         }
         
         .history-poster-link {
-            width: 80px;
-            height: 120px;
+            width: 120px;
+            height: 180px;
+            margin: 0 auto;
+        }
+        
+        .history-info {
+            width: 100%;
+            text-align: center;
+            margin-top: 15px;
         }
         
         .history-title {
-            font-size: 14px;
+            font-size: 16px;
+            margin-top: 10px;
         }
         
         .history-time {
             font-size: 12px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .history-container {
+            padding: 15px;
+        }
+        
+        .history-poster-link {
+            width: 100px;
+            height: 150px;
+        }
+        
+        .history-title {
+            font-size: 14px;
         }
     }
 
