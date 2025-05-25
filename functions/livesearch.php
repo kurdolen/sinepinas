@@ -1,6 +1,6 @@
 <?php
 
-require_once 'db_connection.php'; /
+require_once 'db_connection.php'; 
 
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 
