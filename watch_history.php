@@ -1,5 +1,50 @@
+<?php
+require_once 'functions/db_connection.php'; // Include your database connection file
+$conn = loadDatabase();
+
+// gets the user id loggined in
+if (isset($_SESSION['user_id'])) {
+  $user_id = $_SESSION['user_id'];
+}
+// Fetch user information
+$history_results = [];
+$movie_info = [];
+
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+if (isset($user_id)) {
+  // Prepare and execute the query to fetch user information
+  $stmt = $conn->prepare("SELECT movie_id, last_watch FROM watch_history WHERE user_id = ? ORDER BY last_watch DESC");
+  $stmt->bind_param("i", $user_id);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  while ($row = $result->fetch_assoc()) {
+    $history_results[] = $row;
+  }
+}
+
+// fetch movie information for each movie_id in the watch history
+foreach ($history_results as $item) {
+  $movie_id = $item['movie_id'];
+  $stmt = $conn->prepare("SELECT title, poster_link FROM movie_info WHERE movie_id = ?");
+  $stmt->bind_param("i", $movie_id);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  if ($result->num_rows > 0) {
+    $movie_info[$movie_id] = $result->fetch_assoc();
+  }
+}
+
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,33 +61,64 @@
 
   <title>SinePinas</title>
 </head>
+
 <body>
   <div class="index-bg">
     <div class="back-button">
       <a href="user_profile.php">Back</a>
     </div>
+
+
+
     <div class="history-container">
       <h1>Watch History</h1>
       <hr class="line">
       <div class="history-list">
+
+
+
+
+
+        <!--
         <div class="history-row">
           <a href="#" class="history-poster-link"><div class="history-poster"></div></a>
           <div class="history-title">Heneral Luna</div>
         </div>
-        <div class="history-row">
-          <a href="#" class="history-poster-link"><div class="history-poster"></div></a>
-          <div class="history-title">Hows of us</div>
-        </div>
-        <div class="history-row">
-          <a href="#" class="history-poster-link"><div class="history-poster"></div></a>
-          <div class="history-title">Parental Gurdians</div>
-        </div>
-        <div class="history-row">
-          <a href="#" class="history-poster-link"><div class="history-poster"></div></a>
-          <div class="history-title">Four sisters in a wedding</div>
-        </div>
+        -->
+
+
+
+
+        <!-- Loop through the watch history results -->
+        <?php foreach ($history_results as $item): ?>
+          <?php
+          $movie_id = $item['movie_id'];
+          if (isset($movie_info[$movie_id])) {
+            $title = $movie_info[$movie_id]['title'];
+            $poster_link = $movie_info[$movie_id]['poster_link'];
+          }
+          ?>
+
+          <div class="history-row">
+            <a href="#" class="history-poster-link">
+              <div class="history-poster" style="background-image: url('<?php echo htmlspecialchars($poster_link); ?>');"></div>
+            </a>
+            <div class="history-title"><?php echo htmlspecialchars($title); ?></div>
+            <div class="history-time"><?php echo "Last time watched:" . htmlspecialchars($item['last_watch']); ?></div>
+          </div>
+
+        <?php endforeach; ?>
+
+
+
       </div>
     </div>
+
+
+
+
+
   </div>
 </body>
+
 </html>

@@ -3,18 +3,52 @@
 require_once 'functions/db_connection.php'; // Adjust path if needed
 
 $conn = loadDatabase();
-$movie = $_GET['id'] ?? '';
+$movie = (int)($_GET['id'] ?? 0);
 $results = [];
 
-if (trim($movie) !== '') {
-    if ($conn instanceof PDO) {
-        $stmt = $conn->prepare("SELECT * FROM movie_info WHERE movie_id = ?");
-        $stmt->execute([$movie]);
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+if($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
 }
-?>
 
+if (isset($movie)) {
+  $stmt = $conn->prepare("SELECT * FROM movie_info WHERE movie_id = ?");
+  $stmt->bind_param("i", $movie);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  $results = $result->fetch_assoc();
+}
+
+
+// checks if user is logged in, and record the movie watch history
+if (isset($_SESSION['user_id'])) {
+  $userId = $_SESSION['user_id'];
+  // Check if this movie is already in the user's watch history
+  $checkStmt = $conn->prepare("SELECT 1 FROM watch_history WHERE user_id = ? AND movie_id = ?");
+  $checkStmt->bind_param("ii", $userId, $movie);
+  $checkStmt->execute();
+  $checkStmt->store_result();
+
+  if ($checkStmt->num_rows === 0) {
+    $stmt = $conn->prepare("INSERT INTO watch_history (user_id, movie_id, last_watch) VALUES (?, ?, NOW())");
+    $stmt->bind_param("ii", $userId, $movie);
+    $stmt->execute();
+    $stmt->close();
+
+    // Increment num_moviesWatched in user_info table
+    $updateUserStmt = $conn->prepare("UPDATE user_info SET num_moviesWatched = num_moviesWatched + 1 WHERE user_id = ?");
+    $updateUserStmt->bind_param("i", $userId);
+    $updateUserStmt->execute();
+    $updateUserStmt->close();
+  } else {
+    $updateStmt = $conn->prepare("UPDATE watch_history SET last_watch = NOW() WHERE user_id = ? AND movie_id = ?");
+    $updateStmt->bind_param("ii", $userId, $movie);
+    $updateStmt->execute();
+    $updateStmt->close();
+  }
+  $checkStmt->close();
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -37,11 +71,19 @@ if (trim($movie) !== '') {
   <div class="desktop-1">
     <div class="rectangle-1">
       <div class="hero-content">
-        <a href="index.php" alt="index_page">
+        <a href="home.php" alt="index_page">
           <h1>SinePinas</h1>
         </a>
         <p>Explore the best of Philippine movies</p>
       </div>
+    </div>
+
+    <div class="nav-bar">
+      <a href="search_page.php?search=drama" class="romance">Drama</a>
+      <a href="search_page.php?search=romance" class="romance">Romance</a>
+      <a href="search_page.php?search=comedy" class="romance">Comedy</a>
+      <a href="search_page.php?search=horror" class="romance">Horror</a>
+      <a href="search_page.php?search=action" class="romance">Action</a>
     </div>
 
     <div class="nav-right">
@@ -51,31 +93,30 @@ if (trim($movie) !== '') {
             <input type="submit" value="Find" class="search-btn">
         </form>
       </div>
-
-      
+      <a href="home.php" class="nav-link">See Featured Movies</a>
     </div>
 
     <div class="content-wrapper">
       <div class="left-section">
         <div class="movie-container">
           <div class="video-player">
-            <iframe id="videoFrame" src="https://nextgencloudtools.com/embed/movie/tt4944352/"
+            <iframe id="videoFrame" src="<?php echo htmlspecialchars($results["movie_link"] ?? '', ENT_QUOTES); ?>"
               frameborder="0" allowfullscreen allow="autoplay; encrypted-media; fullscreen">
             </iframe>
           </div>
 
           <div class="movie-details">
-            <h2>Heneral Luna</h2>
+            <h2><?php echo htmlspecialchars($results["title"] ?? '', ENT_QUOTES); ?></h2>
             <div class="movie-meta">
-              <span class="year">2015</span>
-              <span class="genre">Historical Drama</span>
-              <span class="duration">2h 18m</span>
+              <span class="year"><?php echo htmlspecialchars($results["release_year"] ?? '', ENT_QUOTES); ?></span>
+              <span class="genre"><?php echo htmlspecialchars($results["genre"] ?? '', ENT_QUOTES); ?></span>
             </div>
             <div class="movie-description">
               <div class="description-poster">
-                <img src="images/heneral_luna.jpg" alt="Heneral Luna Poster" style="width: 100%; height: 100%; object-fit: cover;">
+                <img src="<?php echo htmlspecialchars($results["poster_link"] ?? '', ENT_QUOTES); ?>" 
+                alt="Heneral Luna Poster" style="width: 100%; height: 100%; object-fit: cover;">
               </div>
-              <p>A historical biopic of Antonio Luna, a general in the Philippine Revolutionary Army who fought against the American occupation of the Philippines in 1899. The film follows his leadership and struggles as he tries to unite the Filipino forces against the American invaders, while dealing with political infighting and personal conflicts within the revolutionary government.</p>
+              <p><?php echo htmlspecialchars($results["description"] ?? '', ENT_QUOTES); ?></p>
             </div>
           </div>
         </div>

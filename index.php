@@ -69,10 +69,10 @@ loadDatabase();
       <div class="footer-section">
         <h4>Connect With Us</h4>
         <div class="social-links">
-          <a href="#" aria-label="Facebook"><ion-icon name="logo-facebook"></ion-icon></a>
-          <a href="#" aria-label="Twitter"><ion-icon name="logo-twitter"></ion-icon></a>
-          <a href="#" aria-label="Instagram"><ion-icon name="logo-instagram"></ion-icon></a>
-          <a href="#" aria-label="YouTube"><ion-icon name="logo-youtube"></ion-icon></a>
+          <a href="https://www.facebook.com/photo/?fbid=808436040462214&set=ecnf.100038874768873"><ion-icon name="logo-facebook"></ion-icon></a>
+          <a href="https://youtu.be/vvFSVIy1Nqs?si=pUvrrhc5r0uzDbeA"><ion-icon name="logo-twitter"></ion-icon></a>
+          <a href="https://www.instagram.com/lemskipepsi?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><ion-icon name="logo-instagram"></ion-icon></a>
+          <a href="https://www.youtube.com/watch?v=xvFZjo5PgG0"><ion-icon name="logo-youtube"></ion-icon></a>
         </div>
       </div>
     </div>

@@ -2,6 +2,29 @@
 include 'functions/login_verification.php';
 $watching = $_SESSION['watching'] ?? 0;
 
+
+
+// establish manual database connection
+$dbhost = "localhost";
+$db_username = "root";
+$db_password = "";
+$dbname = "sinepinas";
+
+$connect = new mysqli($dbhost, $db_username, $db_password, $dbname);
+
+if ($connect->connect_error) {
+  die("Connection failed: " . $connect->connect_error);
+} else {
+  // Fetch all movies in the 'Action' category (assuming 'category' is the column name)
+  $stmt = $connect->prepare("SELECT * FROM movie_info");
+  //$stmt->bind_param("s", $category);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  $results = $result->fetch_all(MYSQLI_ASSOC);
+}
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -27,20 +50,19 @@ $watching = $_SESSION['watching'] ?? 0;
   <div class="desktop-1">
     <div class="rectangle-1" src="images/main_bg.png">
       <div class="hero-content">
-        <a href="index.php" alt="index_page">
-          <h1>SinePinas</h1>
-        </a>
-
-        <p>Explore the best of Philippine movies</p>
+        <h1>SinePinas</h1>
+        <p>Explore the best of Philippine cinema</p>
       </div>
     </div>
 
-    <div class="top-movies"></div>
-    <a href="#" class="classic">Drama</a>
-    <a href="#" class="romance">Romance</a>
-    <a href="#" class="comedy">Comedy</a>
-    <a href="#" class="horror">Horror</a>
-    <a href="#" class="history">Action</a>
+    <div class="nav-bar">
+      <a href="search_page.php?search=drama" class="romance">Drama</a>
+      <a href="search_page.php?search=romance" class="romance">Romance</a>
+      <a href="search_page.php?search=comedy" class="romance">Comedy</a>
+      <a href="search_page.php?search=horror" class="romance">Horror</a>
+      <a href="search_page.php?search=action" class="romance">Action</a>
+    </div>
+
     <div class="nav-right">
       <div class="search-container">
         <form action="functions/search.php" method="GET">
@@ -52,7 +74,7 @@ $watching = $_SESSION['watching'] ?? 0;
 
       <?php
       if (isset($_SESSION['user_id'])) {
-        echo '<a href="user_profile.php" class="register">
+        echo '<a href="user_profile.php" class="register" onclick="sessionStorage.setItem(\'entryPage\', window.location.href)">
                 <img class="fil" src="images/fil0.png" alt="user profile" />
               </a>';
       } else {
@@ -63,32 +85,12 @@ $watching = $_SESSION['watching'] ?? 0;
       ?>
 
     </div>
-
-    <div class="movie-grid">
-      <!--
-      <div class="rectangle-2" title="The Hows of Us">
-        <div class="movie-info">
-          <h3>The Hows of Us"></h3>
-          <p>2015 • Historical Drama</p>
-        </div>
-      </div>
-      <div class="rectangle-8" title="Four Sisters and a Wedding">
-        <div class="movie-info">
-          <h3>Four Sisters and a Wedding</h3>
-          <p>2013 • Comedy Drama</p>
-        </div>
-      </div>
-      <div class="rectangle-11" title="On the Job">
-        <div class="movie-info">
-          <h3>On the Job</h3>
-          <p>2013 • Crime Thriller</p>
-        </div>
-      </div>
-      -->
-    </div>
+    <div class="movie-grid"></div>
 
     <div class="episodes">Featured Movies</div>
     <div class="episodes-grid">
+
+      <!--
       <div class="rectangle-12" title="The Hows of Us">
         <img src="https://i.pinimg.com/736x/71/2c/7d/712c7d31cf2a801c47f2afd81562b2cc.jpg" alt="The Hows of Us" />
         <div class="movie-info">
@@ -110,23 +112,28 @@ $watching = $_SESSION['watching'] ?? 0;
           <p>2016 • Thriller</p>
         </div>
       </div>
+    -->
 
-      
-      <div class="rectangle-15"></div>
-      <div class="rectangle-16"></div>
-      <div class="rectangle-17"></div>
-      <div class="rectangle-18"></div>
-      <div class="rectangle-19"></div>
-      <div class="rectangle-20"></div>
-      <div class="rectangle-21"></div>
-      <div class="rectangle-22"></div>
-      <div class="rectangle-23"></div>
-      <div class="rectangle-24"></div>
-      <div class="rectangle-25"></div>
-      <div class="rectangle-26"></div>
-      <div class="rectangle-27"></div>
-      <div class="rectangle-28"></div>
-      <div class="rectangle-29"></div>
+      <?php
+      $i = 11;
+      foreach ($results as $movie) {
+        // Limit the number of displayed movies to 12
+        if ($i == 20) break;
+        echo '<a href="movie_container.php?id=' . urlencode($movie['movie_id']) . '">
+          <div class="rectangle-' . $i . '" title="' . htmlspecialchars($movie['title'], ENT_QUOTES) . '">
+            <img src="' . htmlspecialchars($movie['poster_link'], ENT_QUOTES) . '" alt="' . htmlspecialchars($movie['title'], ENT_QUOTES) . '" />
+            <div class="movie-info">
+              <h3>' . htmlspecialchars($movie['title'], ENT_QUOTES) . '</h3>
+              <p>' . htmlspecialchars($movie['release_year'], ENT_QUOTES) . ' • ' . htmlspecialchars($movie['genre'], ENT_QUOTES) . '</p>
+            </div>
+          </div>
+              </a>';
+        $i++;
+      }
+      ?>
+
+
+
     </div>
   </div>
 
@@ -202,7 +209,7 @@ $watching = $_SESSION['watching'] ?? 0;
       <div class="footer-section">
         <h4>Navigate</h4>
         <ul>
-          <li><a href="#">Home</a></li>
+          <li><a href="index.php">Home</a></li>
           <li><a href="#">Explore Movies</a></li>
         </ul>
       </div>
@@ -221,10 +228,10 @@ $watching = $_SESSION['watching'] ?? 0;
       <div class="footer-section">
         <h4>Connect With Us</h4>
         <div class="social-links">
-          <a href="#"><ion-icon name="logo-facebook"></ion-icon></a>
-          <a href="#"><ion-icon name="logo-twitter"></ion-icon></a>
-          <a href="#"><ion-icon name="logo-instagram"></ion-icon></a>
-          <a href="#"><ion-icon name="logo-youtube"></ion-icon></a>
+          <a href="https://www.facebook.com/photo/?fbid=808436040462214&set=ecnf.100038874768873"><ion-icon name="logo-facebook"></ion-icon></a>
+          <a href="https://youtu.be/vvFSVIy1Nqs?si=pUvrrhc5r0uzDbeA"><ion-icon name="logo-twitter"></ion-icon></a>
+          <a href="https://www.instagram.com/lemskipepsi?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><ion-icon name="logo-instagram"></ion-icon></a>
+          <a href="https://www.youtube.com/watch?v=xvFZjo5PgG0"><ion-icon name="logo-youtube"></ion-icon></a>
         </div>
       </div>
     </div>

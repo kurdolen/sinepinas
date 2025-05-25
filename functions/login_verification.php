@@ -33,7 +33,7 @@ if ($result->num_rows === 1) {
     $user = $result->fetch_assoc();
 
     // Check password
-    if ($password === $user['user_password']) {
+    if (password_verify($password, $user['user_password'])) {
         // Success stores user info in session variables
         echo "Login successful. Welcome, " . htmlspecialchars($username) . "!";
         $_SESSION['username'] = $user['username'] ?? null;

@@ -8,13 +8,14 @@ $results = [];
 
 if (trim($searchQuery) !== '') {
     if ($conn instanceof PDO) {
-        $stmt = $conn->prepare("SELECT * FROM movie_info WHERE title LIKE ?");
-        $stmt->execute(["%" . $searchQuery . "%"]);
+        $stmt = $conn->prepare("SELECT * FROM movie_info WHERE title LIKE ? OR genre LIKE ?");
+        $like = "%" . $searchQuery . "%";
+        $stmt->execute([$like, $like]);
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } else {
-        $stmt = $conn->prepare("SELECT * FROM movie_info WHERE title LIKE ?");
+        $stmt = $conn->prepare("SELECT * FROM movie_info WHERE title LIKE ? OR genre LIKE ?");
         $like = "%" . $searchQuery . "%";
-        $stmt->bind_param("s", $like);
+        $stmt->bind_param("ss", $like, $like);
         $stmt->execute();
         $result = $stmt->get_result();
         $results = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
@@ -681,7 +682,7 @@ if (trim($searchQuery) !== '') {
 
         <?php
         if (isset($_SESSION['user_id'])) {
-            echo '<a href="user_profile.php" class="register">
+            echo '<a href="user_profile.php" class="register" onclick="sessionStorage.setItem(\'entryPage\', window.location.href)">
             <img class="fil" src="images/fil0.png" alt="user profile" />
               </a>';
         } else {

@@ -17,6 +17,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = $_POST['registerEmail'];
     $password = $_POST['registerPassword'];
 
+    // Hash the password before storing
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
     // check if email or username already exists
     $check = "SELECT * FROM user_info WHERE username = '$username' OR email = '$email'";
     $result = $conn->query($check);
@@ -24,11 +27,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($result && $result->num_rows > 0) {
         echo "Username or email already exists!";
     } else {
-        // Insert into database
+        // Insert into database with hashed password
         $sql = "INSERT INTO user_info (username, email, user_password) 
-                VALUES ('$username', '$email', '$password')";
-
-                
+                VALUES ('$username', '$email', '$hashedPassword')";
 
         if ($conn->query($sql) === TRUE) {
             $sql = "SELECT * FROM user_info WHERE username = ?";
@@ -55,10 +56,4 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 
 $conn->close();
-
-
-
-
-
-
 ?>
